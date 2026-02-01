@@ -1,0 +1,103 @@
+{
+  "transactions": [
+    {
+      "id": "542fc901-9fbb-473a-8a8e-f61376340181",
+      "title": "Placeholder 9",
+      "amount": 1800,
+      "type": "Entrada",
+      "category": "Outros",
+      "date": "2026-01-12",
+      "period": "Último Mês"
+    },
+    {
+      "id": "53282a98-59a7-407c-9d30-621819b0233c",
+      "title": "Placeholder 11",
+      "amount": 800,
+      "type": "Saída",
+      "category": "Aluguel",
+      "date": "2026-01-01",
+      "period": "Última Semana"
+    },
+    {
+      "id": "4f813bf7-fca4-4255-a60d-f23ce1294f22",
+      "title": "Placeholder 8",
+      "amount": 1400,
+      "type": "Entrada",
+      "category": "Freelance",
+      "date": "2026-01-15",
+      "period": "Último Mês"
+    },
+    {
+      "id": "ec3064f3-2350-4b3f-a17c-e0406d44d1e3",
+      "title": "Placeholder 10",
+      "amount": 180,
+      "type": "Saída",
+      "category": "Animais de Estimação",
+      "date": "2026-01-12",
+      "period": "Último Mês"
+    },
+    {
+      "id": "27072359-bdaf-4995-88dd-b5391ebd7222",
+      "title": "Placeholder 6",
+      "amount": 800,
+      "type": "Saída",
+      "category": "Mercado",
+      "date": "2026-01-29",
+      "period": "Última Semana"
+    },
+    {
+      "id": "9a6bfd37-a270-462d-b086-fd41623778be",
+      "title": "Placeholder 1",
+      "amount": 10000,
+      "type": "Entrada",
+      "category": "Consultoria",
+      "date": "2026-01-31",
+      "period": "Última Semana"
+    },
+    {
+      "id": "8f1204e3-a527-4aaa-b713-be0f458927f2",
+      "title": "Placeholder 2",
+      "amount": 10000,
+      "type": "Entrada",
+      "category": "Prêmios e Bonificações",
+      "date": "2026-01-31",
+      "period": "Última Semana"
+    },
+    {
+      "id": "faad8a3e-d0cd-4d8d-997b-82b3246684ca",
+      "title": "Placeholder 3",
+      "amount": 10000,
+      "type": "Saída",
+      "category": "Alimentação",
+      "date": "2026-01-31",
+      "period": "Última Semana"
+    },
+    {
+      "id": "efec059a-bbd7-4bef-9919-2e8c959f3499",
+      "title": "Placeholder 4",
+      "amount": 10000,
+      "type": "Entrada",
+      "category": "Vendas",
+      "date": "2026-01-31",
+      "period": "Última Semana"
+    },
+    {
+      "id": "b56aa932-375f-41de-9277-85749b1e7d0e",
+      "title": "Placeholder 5",
+      "amount": 10000,
+      "type": "Saída",
+      "category": "Aluguel",
+      "date": "2026-01-31",
+      "period": "Última Semana"
+    },
+    {
+      "id": "a345fda5-ac54-40d0-9f13-017c60494261",
+      "title": "Placeholder 7",
+      "amount": 1,
+      "type": "Entrada",
+      "category": "Consultoria",
+      "date": "2026-01-22",
+      "period": "Último Mês"
+    }
+  ]
+}
