@@ -98,6 +98,15 @@
       "category": "Consultoria",
       "date": "2026-01-22",
       "period": "Último Mês"
+    },
+    {
+      "id": "709fd318-c50b-4bae-a075-aa48d4d23e86",
+      "title": "Placeholder 12",
+      "amount": 1000,
+      "type": "Saída",
+      "category": "Aluguel",
+      "date": "2026-02-02",
+      "period": "Última Semana"
     }
   ]
 }

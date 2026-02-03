@@ -51,7 +51,7 @@ const UniqueTransaction: React.FC<UniqueTransactionProps> = ({
         {formattedDate}
       </h1>
 
-      <div className="relative bg-white text-black flex items-center border border-gray-500/50 rounded-xl h-25 px-4 py-3 mb-6 w-220">
+      <div className="relative bg-white text-black flex items-center border border-gray-500/50 rounded-xl h-25 px-4 py-3 mb-6 w-190">
         <div className="flex justify-center items-center text-2xl bg-blue-200 rounded-full w-14 h-14 p-3 border border-gray-500/50">
           {categoryIcon}
         </div>
@@ -66,7 +66,7 @@ const UniqueTransaction: React.FC<UniqueTransactionProps> = ({
         </div>
         <div className="flex flex-col mr-10 mx-auto">
           <div
-            className={`text-3xl font-bold mb-3 ${
+            className={`text-2xl font-bold mb-3 ${
               transaction.type === "Entrada" ? "text-green-600" : "text-red-600"
             }`}
           >
@@ -78,7 +78,7 @@ const UniqueTransaction: React.FC<UniqueTransactionProps> = ({
           </div>
 
           <span
-            className={`text-md border rounded-full py px-2 font-bold w-fit ml-auto ${
+            className={`text-sm border rounded-full py px-2 font-bold w-fit ml-auto ${
               transaction.type === "Entrada"
                 ? "border-green-600 bg-green-200 hover:border-green-800 hover:bg-green-300 text-green-600"
                 : "border-red-600 bg-red-200 hover:border-red-800 hover:bg-red-300 text-red-600"

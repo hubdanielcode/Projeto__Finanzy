@@ -69,7 +69,7 @@ const Pagination: React.FC<PaginationProps> = ({
     };
   }, [isPageLimitDropdownOpen]);
   return (
-    <div className="relative bg-white border border-gray-500/50 px-4 py-3 my-6 rounded-lg flex w-220">
+    <div className="relative bg-white border border-gray-500/50 px-4 py-3 my-6 rounded-lg flex w-190">
       <div className="flex flex-col gap-5">
         <p className="text-sm text-black pt-3">
           Mostrando
@@ -90,9 +90,7 @@ const Pagination: React.FC<PaginationProps> = ({
             ref={PageLimitDropdownRef}
           >
             <div
-              className={`absolute left-0 top-0 flex items-center overflow-hidden border border-gray-500/50 rounded-lg bg-gray-100 cursor-pointer transition-all duration-300 ease-in-out
-                ${isPageLimitDropdownOpen ? "w-56 shadow-lg z-1" : "w-14 shadow-sm z-1"}
-              `}
+              className={`absolute left-0 top-0 flex items-center overflow-hidden border border-gray-500/50 rounded-lg bg-gray-100 cursor-pointer transition-all duration-300 ease-in-out text-gray-700 ${isPageLimitDropdownOpen ? "w-56 shadow-lg z-1" : "w-14 shadow-sm z-1"}`}
               onClick={() => setIsPageLimitDropdownOpen((prev) => !prev)}
             >
               {PageLimitOptions.filter(

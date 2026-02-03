@@ -5,50 +5,49 @@ import { useState } from "react";
 const Header = () => {
   const [isPrivate, setIsPrivate] = useState(false);
 
-  const handleSetPrivacy = () => {
-    setIsPrivate(!isPrivate);
-  };
   return (
-    <header className="w-full h-70 bg-linear-to-r from-blue-600 to-purple-600">
-      <div className="max-w-screen mx-70 text-white">
-        <div className="flex items-center gap-4 max-w-screen">
-          <div className="backdrop-blur-sm rounded-xl items-center justify-center w-fit h-20 flex">
+    <header className="w-full py-6 bg-linear-to-r from-blue-600 to-purple-600">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+        <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+          {/* - Logo + título - */}
+
+          <div className="backdrop-blur-sm rounded-xl flex items-center p-4 min-w-0 ">
             <img
-              className="h-18 w-18 rounded-xl mt-4"
+              className="h-10 w-10 sm:h-14 sm:w-14 shrink-0 rounded-lg"
               src="./src/assets/images/FinanzyLogo.png"
               alt="Logo"
             />
 
-            <div className="pl-4 pt-4">
-              <h1 className="text-3xl font-bold mb-2">Controle Financeiro</h1>
-              <p className="text-md opacity-90 flex flex-col">
+            <div className="pl-4 overflow-hidden">
+              <h1 className="text-lg sm:text-3xl font-bold truncate">
+                Controle Financeiro
+              </h1>
+              <p className="text-[11.5px] sm:text-sm opacity-90 truncate">
                 Gerencie suas finanças pessoais
               </p>
             </div>
           </div>
-          <div className="text-white font-semibold flex items-center justify-center bg-white/20 border border-gray-50/50 backdrop-blur-sm rounded-xl py-2 px-4 ml-auto">
+
+          {/* - Botão - */}
+
+          <button
+            onClick={() => setIsPrivate(!isPrivate)}
+            className="flex items-center gap-2 bg-white/20 border border-gray-50/50 backdrop-blur-sm rounded-lg py-2 px-4 font-semibold whitespace-nowrap focus:none outline:none cursor-pointer"
+          >
             {isPrivate ? (
-              <EyeClosed
-                className="mr-3 h-8 w-8 cursor-pointer"
-                role="button"
-                onClick={handleSetPrivacy}
-              />
+              <EyeClosed className="h-6 w-6" />
             ) : (
-              <Eye
-                className="mr-3 h-8 w-8 cursor-pointer"
-                role="button"
-                onClick={handleSetPrivacy}
-              />
+              <Eye className="h-6 w-6" />
             )}
-            <span className="text-white text-sm hidden sm:inline">
+            <span className="hidden sm:inline">
               {isPrivate ? "Mostrar" : "Ocultar"}
             </span>
-          </div>
+          </button>
         </div>
 
-        <div className="flex gap-6 max-w-full mt-3">
-          <TransactionCards isPrivate={isPrivate} />
-        </div>
+        {/* - Cards - */}
+
+        <TransactionCards isPrivate={isPrivate} />
       </div>
     </header>
   );

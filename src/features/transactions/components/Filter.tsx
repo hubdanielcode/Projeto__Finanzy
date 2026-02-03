@@ -2,7 +2,7 @@ import { Funnel, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import type { Transaction } from "../model/TransactionTypes";
-import { IncomeOptions, ExpenseOptions } from "./TransactionForm";
+import { IncomeOptions, ExpenseOptions } from "../model/TransactionOptions";
 import {
   TransactionTypeOptions,
   PeriodOptions,
@@ -70,7 +70,7 @@ const Filter: React.FC<FilterProps> = ({
   }, [isCategoryOpen, isPeriodOpen, isTypeOpen]);
 
   return (
-    <div className="flex flex-col mt-8 mb-4 px-8 mr-10 bg-white w-220 h-fit rounded-xl text-md border border-gray-500/50 mx-auto">
+    <div className="flex flex-col mt-8 mb-4 px-8 mr-10 bg-white w-190 h-fit rounded-xl text-md border border-gray-500/50 mx-auto">
       {/* - Searchbar - */}
 
       <div className="flex items-center gap-3 h-20 mt-6">
@@ -80,7 +80,7 @@ const Filter: React.FC<FilterProps> = ({
             size={16}
           />
           <input
-            className="w-full outline-none text-gray-700 text-md placeholder-gray-400 ml-2 "
+            className="w-full outline-none text-gray-700 text-md placeholder-gray-400 ml-2"
             type="text"
             placeholder="Buscar transação por título..."
             value={searchQuery}
@@ -98,6 +98,7 @@ const Filter: React.FC<FilterProps> = ({
       </div>
 
       {/* - Inputs - */}
+
       {isFilterOpen && (
         <div
           className="grid grid-cols-3 mt-6 relative"
@@ -124,7 +125,7 @@ const Filter: React.FC<FilterProps> = ({
             />
 
             {isPeriodOpen && (
-              <ul className="absolute z-50 mt-2 w-60 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+              <ul className="absolute z-1 mt-2 w-60 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                 {PeriodOptions.map((option) => (
                   <li
                     className="px-4 py-2 text-md text-gray-700 cursor-pointer hover:bg-blue-200 hover:text-blue-600 transition-colors"

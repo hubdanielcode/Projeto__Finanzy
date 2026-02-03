@@ -27,7 +27,7 @@ const App = () => {
   >(null);
 
   return (
-    <div className="bg-gray-100 min-h-screen select-none scroll-smooth">
+    <div className="bg-gray-100 min-h-screen mx-auto select-none scroll-smooth">
       <TransactionProvider>
         <Header />
         <MainContent

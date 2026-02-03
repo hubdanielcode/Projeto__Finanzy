@@ -3,6 +3,7 @@ import { TransactionContext } from "../context/TransactionContext";
 import { TransactionForm } from "./TransactionForm";
 import { Filter } from "./Filter";
 import { TransactionList } from "./TransactionList";
+import { TransactionMobileForm } from "./mobile/TransactionMobileForm";
 
 export interface MainContentProps {
   title: string;
@@ -15,8 +16,6 @@ export interface MainContentProps {
   setType: (type: "Entrada" | "Saída" | null) => void;
   category: string;
   setCategory: (category: string) => void;
-  isModalOpen: boolean;
-  setIsModalOpen: (isModalOpen: boolean) => void;
   period:
     | "Hoje"
     | "Última Semana"
@@ -44,11 +43,10 @@ const MainContent: React.FC<MainContentProps> = ({
   setPeriod,
   category,
   setCategory,
-  isModalOpen,
-  setIsModalOpen,
 }) => {
   const { transactions } = useContext(TransactionContext)!;
 
+  const [isMobileFormOpen, setIsMobileFormOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTransactions = useMemo(() => {
@@ -71,11 +69,14 @@ const MainContent: React.FC<MainContentProps> = ({
     if (category) {
       data = data.filter((transaction) => transaction.category === category);
     }
+
     return data;
   }, [transactions, searchQuery, type, period, category]);
 
   return (
-    <div className="flex">
+    <div className="flex gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* - Form do Desktop - */}
+
       <TransactionForm
         title={title}
         setTitle={setTitle}
@@ -83,17 +84,25 @@ const MainContent: React.FC<MainContentProps> = ({
         setAmount={setAmount}
         date={date}
         setDate={setDate}
-        type={type}
-        setType={setType}
-        category={category}
-        setCategory={setCategory}
-        period={period}
-        setPeriod={setPeriod}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+        setIsMobileFormOpen={setIsMobileFormOpen}
       />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col flex-1">
+        {/* - Form do Mobile - */}
+
+        {isMobileFormOpen && (
+          <TransactionMobileForm
+            title={title}
+            setTitle={setTitle}
+            amount={amount}
+            setAmount={setAmount}
+            date={date}
+            setDate={setDate}
+            isMobileFormOpen={isMobileFormOpen}
+            setIsMobileFormOpen={setIsMobileFormOpen}
+          />
+        )}
+
         <Filter
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

@@ -1,5 +1,5 @@
 import { UniqueTransaction } from "./UniqueTransaction";
-import { ExpenseOptions, IncomeOptions } from "./TransactionForm";
+import { ExpenseOptions, IncomeOptions } from "../model/TransactionOptions";
 import type { Transaction } from "../model/TransactionTypes";
 import { Pagination } from "./Pagination";
 import { useState } from "react";
