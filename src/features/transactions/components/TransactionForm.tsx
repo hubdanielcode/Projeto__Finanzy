@@ -12,7 +12,6 @@ export interface TransactionFormProps {
   setAmount: (amount: string) => void;
   date: string;
   setDate: (date: string) => void;
-  setIsMobileFormOpen: (value: boolean) => void;
 }
 
 const TransactionForm: React.FC<TransactionFormProps> = ({
@@ -22,7 +21,6 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   setAmount,
   date,
   setDate,
-  setIsMobileFormOpen,
 }) => {
   const context = useContext(TransactionContext);
   if (!context) {
@@ -37,8 +35,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [formType, setFormType] = useState<"Entrada" | "Saída" | null>(null);
 
-  const DropDownRef = useRef<HTMLDivElement>(null);
-  const TypeRef = useRef<HTMLFormElement>(null);
+  const DropDownRef = useRef<HTMLDivElement | null>(null);
+  const TypeRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -118,38 +116,30 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
 
   return (
     <div>
-      {/* - Botão mobile - */}
-      <div
-        className="sm:hidden w-82 flex py-2 mb-4 px-4 border cursor-pointer rounded-lg mt-6 bg-white border-gray-500/50"
-        onClick={() => setIsMobileFormOpen(true)}
-      >
-        <Plus className="bg-blue-100 mr-3 h-8 w-8 rounded-xl text-blue-500" />
-        <h1 className="font-bold text-black text-xl">Nova Transação</h1>
-      </div>
-
-      {/* - Form Desktop - */}
       <form
+        className="hidden sm:block mx-auto bg-white border border-gray-500/50 rounded-xl text-black max-w-7xl my-8 py-2 px-8 w-99 sticky top-6"
         ref={TypeRef}
         onSubmit={handleSubmit}
-        className="hidden sm:block mx-auto bg-white border border-gray-500/50 rounded-xl text-black max-w-7xl my-8 py-2 px-8 w-110 sticky top-6"
       >
         {/* - Cabeçalho - */}
+
         <div className="w-full flex py-2 mb-4 px-4 pt-6">
           <Plus className="bg-blue-100 mr-3 h-8 w-8 rounded-xl text-blue-500" />
           <h1 className="font-bold text-black text-2xl">Nova Transação</h1>
         </div>
 
         {/* - Título - */}
+
         <div className="mb-4">
           <label className="text-gray-700 font-semibold mb-2 block">
             Título
           </label>
           <input
+            className="bg-gray-100 px-4 py-2 border border-gray-500/50 rounded-lg w-full"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Ex: Salário, Aluguel, Supermercado..."
-            className="bg-gray-100 px-4 py-2 border border-gray-500/50 rounded-lg w-full"
             required
           />
         </div>
@@ -163,11 +153,11 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
           <div className="flex items-center bg-gray-100 border rounded-lg px-4 py-2 border-gray-500/50">
             <span className="font-bold text-gray-700">R$</span>
             <input
+              className="pl-2 outline-none w-full bg-transparent"
               type="text"
               value={amount}
               onChange={(e) => handleAmountChange(e.target.value)}
               placeholder="0,00"
-              className="pl-2 outline-none w-full bg-transparent"
               required
             />
           </div>
@@ -179,25 +169,25 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
           <label className="text-gray-700 font-semibold mb-2 block">Tipo</label>
           <div className="flex gap-8 justify-center mb-4">
             <button
-              type="button"
-              onClick={handleSelectIncome}
               className={`font-bold py-2 px-4 w-45 h-12 rounded-lg border ${
                 formType === "Entrada"
                   ? "bg-green-100 text-green-600 border-green-600"
                   : "bg-gray-100 text-gray-700 border-gray-500/50 hover:bg-green-100 hover:text-green-600 hover:border-green-600"
               }`}
+              type="button"
+              onClick={handleSelectIncome}
             >
               Entrada
             </button>
 
             <button
-              type="button"
-              onClick={handleSelectExpense}
               className={`font-bold py-2 px-4 w-45 h-12 rounded-lg border ${
                 formType === "Saída"
                   ? "bg-red-100 text-red-600 border-red-600"
                   : "bg-gray-100 text-gray-700 border-gray-500/50 hover:bg-red-100 hover:text-red-600 hover:border-red-600"
               }`}
+              type="button"
+              onClick={handleSelectExpense}
             >
               Saída
             </button>
@@ -218,8 +208,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             <ul>
               {ExpenseOptions.map((option) => (
                 <li
-                  key={option}
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  key={option}
                   onClick={() => {
                     setSelectedCategory(option);
                     setIsOpen(false);
@@ -235,8 +225,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             <ul>
               {IncomeOptions.map((option) => (
                 <li
-                  key={option}
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  key={option}
                   onClick={() => {
                     setSelectedCategory(option);
                     setIsOpen(false);
@@ -249,6 +239,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
           )}
 
           <input
+            className="bg-gray-100 px-4 py-2 border border-gray-500/50 rounded-lg w-full disabled:opacity-60"
             type="text"
             value={selectedCategory}
             readOnly
@@ -257,7 +248,6 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             placeholder={
               formType ? "Selecione uma categoria" : "Selecione o tipo primeiro"
             }
-            className="bg-gray-100 px-4 py-2 border border-gray-500/50 rounded-lg w-full disabled:opacity-60"
             required
           />
         </div>
@@ -267,17 +257,17 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
         <div className="mb-4">
           <label className="text-gray-700 font-semibold mb-2 block">Data</label>
           <input
+            className="bg-gray-100 px-4 py-2 border border-gray-500/50 rounded-lg w-full"
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             max={todayString}
             min="2020-01-01"
-            className="bg-gray-100 px-4 py-2 border border-gray-500/50 rounded-lg w-full"
             required
           />
         </div>
 
-        <button className="w-full bg-blue-600 text-white font-bold rounded-lg h-12">
+        <button className="w-full bg-blue-600 text-white font-bold rounded-lg h-12 mb-3">
           Submit
         </button>
       </form>

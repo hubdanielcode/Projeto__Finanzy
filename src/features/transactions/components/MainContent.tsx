@@ -3,7 +3,9 @@ import { TransactionContext } from "../context/TransactionContext";
 import { TransactionForm } from "./TransactionForm";
 import { Filter } from "./Filter";
 import { TransactionList } from "./TransactionList";
-import { TransactionMobileForm } from "./mobile/TransactionMobileForm";
+import { MobileTransactionForm } from "./mobile/MobileTransactionForm";
+import { MobileFilter } from "./mobile/MobileFilter";
+import { MobileActionsBar } from "./mobile/MobileActionBar";
 
 export interface MainContentProps {
   title: string;
@@ -47,6 +49,8 @@ const MainContent: React.FC<MainContentProps> = ({
   const { transactions } = useContext(TransactionContext)!;
 
   const [isMobileFormOpen, setIsMobileFormOpen] = useState(false);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTransactions = useMemo(() => {
@@ -74,24 +78,46 @@ const MainContent: React.FC<MainContentProps> = ({
   }, [transactions, searchQuery, type, period, category]);
 
   return (
-    <div className="flex gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* - Form do Desktop - */}
-
-      <TransactionForm
-        title={title}
-        setTitle={setTitle}
-        amount={amount}
-        setAmount={setAmount}
-        date={date}
-        setDate={setDate}
-        setIsMobileFormOpen={setIsMobileFormOpen}
+    <>
+      <MobileActionsBar
+        OpenForm={() => setIsMobileFormOpen(true)}
+        OpenTransactionList={() => setIsMobileFilterOpen(true)}
       />
 
+      <div className="flex gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* - Layout Desktop - */}
+
+        <TransactionForm
+          title={title}
+          setTitle={setTitle}
+          amount={amount}
+          setAmount={setAmount}
+          date={date}
+          setDate={setDate}
+        />
+
+        <div className="flex flex-col flex-1">
+          <Filter
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            filteredTransactions={filteredTransactions}
+            type={type}
+            setType={setType}
+            period={period}
+            setPeriod={setPeriod}
+            category={category}
+            setCategory={setCategory}
+          />
+
+          <TransactionList transactions={filteredTransactions} />
+        </div>
+      </div>
+
       <div className="flex flex-col flex-1">
-        {/* - Form do Mobile - */}
+        {/* - Layout Mobile - */}
 
         {isMobileFormOpen && (
-          <TransactionMobileForm
+          <MobileTransactionForm
             title={title}
             setTitle={setTitle}
             amount={amount}
@@ -103,21 +129,23 @@ const MainContent: React.FC<MainContentProps> = ({
           />
         )}
 
-        <Filter
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          filteredTransactions={filteredTransactions}
-          type={type}
-          setType={setType}
-          period={period}
-          setPeriod={setPeriod}
-          category={category}
-          setCategory={setCategory}
-        />
-
-        <TransactionList transactions={filteredTransactions} />
+        {isMobileFilterOpen && (
+          <MobileFilter
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            filteredTransactions={filteredTransactions}
+            type={type}
+            setType={setType}
+            period={period}
+            setPeriod={setPeriod}
+            category={category}
+            setCategory={setCategory}
+            isMobileFilterOpen={isMobileFilterOpen}
+            setIsMobileFilterOpen={setIsMobileFilterOpen}
+          />
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

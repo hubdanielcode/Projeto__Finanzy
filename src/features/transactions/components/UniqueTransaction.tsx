@@ -51,7 +51,7 @@ const UniqueTransaction: React.FC<UniqueTransactionProps> = ({
         {formattedDate}
       </h1>
 
-      <div className="relative bg-white text-black flex items-center border border-gray-500/50 rounded-xl h-25 px-4 py-3 mb-6 w-190">
+      <div className="relative bg-white text-black flex items-center border border-gray-500/50 rounded-xl h-25 px-4 py-3 mb-6 w-202">
         <div className="flex justify-center items-center text-2xl bg-blue-200 rounded-full w-14 h-14 p-3 border border-gray-500/50">
           {categoryIcon}
         </div>

@@ -69,7 +69,7 @@ const Pagination: React.FC<PaginationProps> = ({
     };
   }, [isPageLimitDropdownOpen]);
   return (
-    <div className="relative bg-white border border-gray-500/50 px-4 py-3 my-6 rounded-lg flex w-190">
+    <div className="relative bg-white border border-gray-500/50 px-4 py-3 my-6 rounded-lg flex w-202">
       <div className="flex flex-col gap-5">
         <p className="text-sm text-black pt-3">
           Mostrando

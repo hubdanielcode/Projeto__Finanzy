@@ -20,10 +20,10 @@ export interface TransactionFormProps {
   date: string;
   setDate: (date: string) => void;
   isMobileFormOpen: boolean;
-  setIsMobileFormOpen: (value: boolean) => void;
+  setIsMobileFormOpen: (isMobileFormOpen: boolean) => void;
 }
 
-const TransactionMobileForm: React.FC<TransactionFormProps> = ({
+const MobileTransactionForm: React.FC<TransactionFormProps> = ({
   title,
   setTitle,
   amount,
@@ -48,7 +48,6 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
   const DropDownRef = useRef<HTMLDivElement>(null);
   const FormRef = useRef<HTMLFormElement>(null);
 
-  // Reset form quando abre o mobile form
   useEffect(() => {
     if (isMobileFormOpen) {
       setFormType(null);
@@ -57,7 +56,6 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
     }
   }, [isMobileFormOpen]);
 
-  // Fecha dropdown ao clicar fora
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -115,9 +113,9 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
   return (
     <div className="fixed inset-0 z-10 sm:hidden bg-white">
       <form
+        className="flex flex-col gap-4 h-full overflow-y-auto px-4 py-6 w-screen"
         ref={FormRef}
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 h-full overflow-y-auto px-4 py-6 w-screen"
       >
         {/* - Cabeçalho - */}
 
@@ -125,9 +123,9 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
           <Plus className="bg-blue-100 h-8 w-8 rounded-xl text-blue-500 p-1" />
           <h1 className="font-bold text-2xl text-black">Nova Transação</h1>
           <button
+            className="ml-auto bg-black h-8 w-8 rounded-xl flex items-center justify-center text-white"
             type="button"
             onClick={() => setIsMobileFormOpen(false)}
-            className="ml-auto bg-black h-8 w-8 rounded-xl flex items-center justify-center text-white"
           >
             <X className="h-4 w-4" />
           </button>
@@ -140,11 +138,11 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
             Título
           </label>
           <input
+            className="w-full px-4 py-2 border rounded-lg bg-gray-100 border-gray-500/50"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Ex: Salário, Aluguel..."
-            className="w-full px-4 py-2 border rounded-lg bg-gray-100 border-gray-500/50"
             required
           />
         </div>
@@ -158,11 +156,11 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
           <div className="flex items-center bg-gray-100 border rounded-lg px-4 py-2 border-gray-500/50">
             <span className="font-bold text-gray-700">R$</span>
             <input
+              className="pl-2 outline-none w-full bg-transparent"
               type="text"
               value={amount}
               onChange={(e) => handleAmountChange(e.target.value)}
               placeholder="0,00"
-              className="pl-2 outline-none w-full bg-transparent"
               required
             />
           </div>
@@ -175,13 +173,6 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
           <div className="flex gap-4">
             {TransactionTypeOptions.map((type) => (
               <button
-                key={type}
-                type="button"
-                onClick={() => {
-                  setFormType(type);
-                  setSelectedCategory("");
-                  setIsOpen(false);
-                }}
                 className={`flex-1 py-2 rounded-lg border font-bold transition outline-none focus:outline-none ${
                   formType === type
                     ? type === "Entrada"
@@ -189,6 +180,13 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
                       : "bg-red-100 border-red-600 text-red-600"
                     : "bg-gray-100 border-gray-500/50 text-gray-700"
                 }`}
+                key={type}
+                type="button"
+                onClick={() => {
+                  setFormType(type);
+                  setSelectedCategory("");
+                  setIsOpen(false);
+                }}
               >
                 {type}
               </button>
@@ -207,8 +205,8 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
               {(formType === "Entrada" ? IncomeOptions : ExpenseOptions).map(
                 (option) => (
                   <li
-                    key={option}
                     className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    key={option}
                     onClick={() => {
                       setSelectedCategory(option);
                       setIsOpen(false);
@@ -221,6 +219,7 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
             </ul>
           )}
           <input
+            className="w-full px-4 py-2 rounded-lg border border-gray-500/50 bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed"
             type="text"
             value={selectedCategory}
             readOnly
@@ -228,7 +227,6 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
             placeholder={
               formType ? "Selecione uma categoria" : "Selecione o tipo primeiro"
             }
-            className="w-full px-4 py-2 rounded-lg border border-gray-500/50 bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed"
             onClick={() => formType && setIsOpen(true)}
             required
           />
@@ -239,13 +237,13 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
         <div>
           <label className="text-gray-700 font-semibold mb-1 block">Data</label>
           <input
+            className="w-full px-4 py-2 border border-gray-500/50 rounded-lg bg-gray-100"
+            required
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             max={todayString}
             min="2020-01-01"
-            className="w-full px-4 py-2 border border-gray-500/50 rounded-lg bg-gray-100"
-            required
           />
         </div>
 
@@ -260,4 +258,4 @@ const TransactionMobileForm: React.FC<TransactionFormProps> = ({
   );
 };
 
-export { TransactionMobileForm };
+export { MobileTransactionForm };
