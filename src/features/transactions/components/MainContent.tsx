@@ -6,6 +6,7 @@ import { TransactionList } from "./TransactionList";
 import { MobileTransactionForm } from "./mobile/MobileTransactionForm";
 import { MobileActionsBar } from "./mobile/MobileActionBar";
 import { MobileTransactionList } from "./mobile/MobileTransactionList";
+import { Footer } from "../../../shared/components/Footer";
 
 export interface MainContentProps {
   title: string;
@@ -97,7 +98,7 @@ const MainContent: React.FC<MainContentProps> = ({
           setDate={setDate}
         />
 
-        <div className="hidden sm:flex sm:flex-col sm:flex-1">
+        <div className="hidden sm:flex sm:flex-col sm:flex-1 bg-gray-100">
           <Filter
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -146,6 +147,12 @@ const MainContent: React.FC<MainContentProps> = ({
             setIsMobileTransactionListOpen={setIsMobileTransactionListOpen}
           />
         )}
+        <Footer
+          isMobileFormOpen={isMobileFormOpen}
+          setIsMobileFormOpen={setIsMobileFormOpen}
+          isMobileTransactionListOpen={isMobileTransactionListOpen}
+          setIsMobileTransactionListOpen={setIsMobileTransactionListOpen}
+        />
       </div>
     </>
   );

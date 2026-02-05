@@ -256,7 +256,7 @@ const Filter: React.FC<FilterProps> = ({
 
         {/* - Footer - */}
 
-        <div className="flex justify-between items-center my-4 pb-6">
+        <div className="flex justify-between items-center py-4 pb-6">
           <div
             onClick={handleClearFilters}
             className="flex items-center font-semibold text-gray-600 hover:text-black cursor-pointer transition-colors"

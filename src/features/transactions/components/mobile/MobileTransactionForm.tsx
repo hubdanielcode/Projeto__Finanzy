@@ -119,7 +119,7 @@ const MobileTransactionForm: React.FC<TransactionFormProps> = ({
       >
         {/* - Cabeçalho - */}
 
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 pb-4">
           <Plus className="bg-blue-100 h-8 w-8 rounded-xl text-blue-500 p-1" />
           <h1 className="font-bold text-2xl text-black">Nova Transação</h1>
           <button

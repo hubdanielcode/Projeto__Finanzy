@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TransactionProvider } from "./features/transactions/context/TransactionContext";
 import { Header } from "./shared/components/Header";
 import { MainContent } from "./features/transactions/components/MainContent";
+import { Footer } from "./shared/components/Footer";
 
 const App = () => {
   const [title, setTitle] = useState("");
@@ -12,6 +13,9 @@ const App = () => {
   const [category, setCategory] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobileFormOpen, setIsMobileFormOpen] = useState(false);
+  const [isMobileTransactionListOpen, setIsMobileTransactionListOpen] =
+    useState(false);
 
   const [period, setPeriod] = useState<
     | "Hoje"
@@ -43,8 +47,6 @@ const App = () => {
           setCategory={setCategory}
           period={period}
           setPeriod={setPeriod}
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
         />
       </TransactionProvider>
     </div>

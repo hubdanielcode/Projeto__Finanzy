@@ -65,9 +65,11 @@ const MobileFilter: React.FC<FilterProps> = ({
 
   return (
     <>
-      <div className="flex items-center gap-3 mb-4 mt-6">
+      <div className="flex items-center gap-3 mb-4 mt-6 bg-white">
         <Funnel className="bg-blue-100 h-8 w-8 rounded-xl text-blue-500 p-1 ml-4" />
-        <h1 className="font-bold text-2xl text-black">Nova Transação</h1>
+        <h1 className="font-bold text-2xl text-black bg-white">
+          Nova Transação
+        </h1>
         <button
           className="absolute right-4 top-6 bg-black h-8 w-8 rounded-xl flex items-center justify-center text-white"
           type="button"
@@ -77,17 +79,17 @@ const MobileFilter: React.FC<FilterProps> = ({
         </button>
       </div>
 
-      <div className="flex flex-col sm:mt-8 mb-4 bg-white sm:rounded-xl mx-auto w-full max-w-5xl">
+      <div className="flex flex-col sm:mt-8 bg-white sm:rounded-xl mx-auto w-full max-w-5xl">
         {/* - Searchbar - */}
 
         <div className="flex items-center gap-3 h-20 px-4">
-          <div className="flex items-center bg-gray-100 h-12 w-full border border-gray-300 rounded-xl px-4">
+          <div className="flex items-center bg-gray-100 h-12 w-full border border-gray-500/50 rounded-xl px-4">
             <FaSearch
-              className="text-gray-400"
+              className="text-gray-700"
               size={16}
             />
             <input
-              className="w-full outline-none text-gray-700 placeholder-gray-400 ml-2 bg-transparent"
+              className="w-full outline-none text-gray-700 ml-2 bg-transparent"
               type="text"
               placeholder="Buscar transação por título..."
               value={searchQuery}
@@ -124,7 +126,7 @@ const MobileFilter: React.FC<FilterProps> = ({
               readOnly
               value={selectedPeriod}
               placeholder="Todos os períodos"
-              className="w-full h-12 bg-gray-100 border border-gray-300 rounded-xl px-4 cursor-pointer"
+              className="w-full h-12 bg-gray-100 border border-gray-500/50 rounded-xl px-4 cursor-pointer"
               onClick={() => setOpen(open === "period" ? null : "period")}
             />
 
@@ -157,7 +159,7 @@ const MobileFilter: React.FC<FilterProps> = ({
               readOnly
               value={selectedType}
               placeholder="Todos os tipos"
-              className="w-full h-12 bg-gray-100 border border-gray-300 rounded-xl px-4 cursor-pointer"
+              className="w-full h-12 bg-gray-100 border border-gray-500/50 rounded-xl px-4 cursor-pointer"
               onClick={() => setOpen(open === "type" ? null : "type")}
             />
 
@@ -192,7 +194,7 @@ const MobileFilter: React.FC<FilterProps> = ({
               readOnly
               value={selectedCategory}
               placeholder="Todas as categorias"
-              className="w-full h-12 bg-gray-100 border border-gray-300 rounded-xl px-4 cursor-pointer"
+              className="w-full h-12 bg-gray-100 border border-gray-500/50 rounded-xl px-4 cursor-pointer"
               onClick={() => setOpen(open === "category" ? null : "category")}
             />
 
@@ -246,7 +248,7 @@ const MobileFilter: React.FC<FilterProps> = ({
 
         {/* - Footer - */}
 
-        <div className="flex my-4 border-b w-screen border-gray-500/50">
+        <div className="flex py-4 border-b w-screen border-gray-500/50">
           <button
             onClick={clearFilters}
             className="flex items-center gap-2 font-semibold text-gray-600 hover:text-black"
@@ -255,7 +257,7 @@ const MobileFilter: React.FC<FilterProps> = ({
             Limpar filtros
           </button>
 
-          <p className="font-semibold text-gray-700 flex flex-1 justify-center items-center w-screen">
+          <p className="font-semibold text-gray-700 flex flex-1 justify-center items-center">
             <span className="text-blue-600 pr-2">
               {filteredTransactions.length}
             </span>
