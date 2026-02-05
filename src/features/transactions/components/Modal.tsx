@@ -34,7 +34,7 @@ const Modal: React.FC<ModalProps> = ({
       <div className="flex flex-col bg-white h-fit w-150 rounded-xl border-gray-500/50 border pt-2 relative">
         {/* - Título geral - */}
 
-        <h1 className="flex w-full font-bold text-black text-3xl justify-center mb-4 pt-2">
+        <h1 className="flex w-full font-bold text-black text-xl sm:text-3xl justify-center mb-4 pt-2">
           Atualize a sua transação
         </h1>
 

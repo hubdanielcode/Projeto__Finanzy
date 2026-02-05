@@ -34,7 +34,7 @@ export const IncomeOptions = [
   "Depósitos",
   "Freelance",
   "Outros",
-  "Prêmios e Bonificações",
+  "Bonificações",
   "Renda Passiva",
   "Rendimentos de Investimentos",
   "Salário",

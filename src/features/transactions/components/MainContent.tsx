@@ -4,8 +4,8 @@ import { TransactionForm } from "./TransactionForm";
 import { Filter } from "./Filter";
 import { TransactionList } from "./TransactionList";
 import { MobileTransactionForm } from "./mobile/MobileTransactionForm";
-import { MobileFilter } from "./mobile/MobileFilter";
 import { MobileActionsBar } from "./mobile/MobileActionBar";
+import { MobileTransactionList } from "./mobile/MobileTransactionList";
 
 export interface MainContentProps {
   title: string;
@@ -49,7 +49,8 @@ const MainContent: React.FC<MainContentProps> = ({
   const { transactions } = useContext(TransactionContext)!;
 
   const [isMobileFormOpen, setIsMobileFormOpen] = useState(false);
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [isMobileTransactionListOpen, setIsMobileTransactionListOpen] =
+    useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -81,7 +82,7 @@ const MainContent: React.FC<MainContentProps> = ({
     <>
       <MobileActionsBar
         OpenForm={() => setIsMobileFormOpen(true)}
-        OpenTransactionList={() => setIsMobileFilterOpen(true)}
+        OpenTransactionList={() => setIsMobileTransactionListOpen(true)}
       />
 
       <div className="flex gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,7 +97,7 @@ const MainContent: React.FC<MainContentProps> = ({
           setDate={setDate}
         />
 
-        <div className="flex flex-col flex-1">
+        <div className="hidden sm:flex sm:flex-col sm:flex-1">
           <Filter
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -129,8 +130,9 @@ const MainContent: React.FC<MainContentProps> = ({
           />
         )}
 
-        {isMobileFilterOpen && (
-          <MobileFilter
+        {isMobileTransactionListOpen && (
+          <MobileTransactionList
+            transactions={filteredTransactions}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             filteredTransactions={filteredTransactions}
@@ -140,8 +142,8 @@ const MainContent: React.FC<MainContentProps> = ({
             setPeriod={setPeriod}
             category={category}
             setCategory={setCategory}
-            isMobileFilterOpen={isMobileFilterOpen}
-            setIsMobileFilterOpen={setIsMobileFilterOpen}
+            isMobileTransactionListOpen={isMobileTransactionListOpen}
+            setIsMobileTransactionListOpen={setIsMobileTransactionListOpen}
           />
         )}
       </div>

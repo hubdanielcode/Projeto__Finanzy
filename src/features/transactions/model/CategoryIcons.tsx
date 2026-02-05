@@ -59,7 +59,7 @@ export const IncomeIcons = {
   Depósitos: {
     icon: "💳",
   },
-  "Prêmios e Bonificações": {
+  Bonificações: {
     icon: "💲",
   },
   Outros: {

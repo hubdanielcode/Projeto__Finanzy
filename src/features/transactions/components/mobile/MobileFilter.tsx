@@ -19,8 +19,8 @@ interface FilterProps {
   setPeriod: (period: Transaction["period"] | null) => void;
   category: string;
   setCategory: (category: string) => void;
-  isMobileFilterOpen: boolean;
-  setIsMobileFilterOpen: (isMobileFilterOpen: boolean) => void;
+  isMobileTransactionListOpen: boolean;
+  setIsMobileTransactionListOpen: (isMobileTransactionOpen: boolean) => void;
 }
 
 const MobileFilter: React.FC<FilterProps> = ({
@@ -31,112 +31,113 @@ const MobileFilter: React.FC<FilterProps> = ({
   setType,
   setPeriod,
   setCategory,
+  setIsMobileTransactionListOpen,
 }) => {
-  const handleClearFilters = () => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const [open, setOpen] = useState<"period" | "type" | "category" | null>(null);
+
+  const [selectedPeriod, setSelectedPeriod] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const filterRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
+        setOpen(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const clearFilters = () => {
     setSearchQuery("");
     setSelectedPeriod("");
     setSelectedType("");
     setSelectedCategory("");
     setType(null);
     setPeriod(null);
+    setCategory("");
   };
 
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isPeriodOpen, setIsPeriodOpen] = useState(false);
-  const [isTypeOpen, setIsTypeOpen] = useState(false);
-
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedPeriod, setSelectedPeriod] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  const filterRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const handleClickAnywhere = (event: MouseEvent) => {
-      if (
-        filterRef.current &&
-        !filterRef.current.contains(event.target as Node)
-      ) {
-        setIsCategoryOpen(false);
-        setIsPeriodOpen(false);
-        setIsTypeOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickAnywhere);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickAnywhere);
-    };
-  }, [isCategoryOpen, isPeriodOpen, isTypeOpen]);
-
   return (
-    <div className="flex flex-col mt-8 mb-4 px-8 mr-10 bg-white w-190 h-fit rounded-xl text-md border border-gray-500/50 mx-auto">
-      {/* - Searchbar - */}
-
-      <div className="flex items-center gap-3 h-20 mt-6">
-        <div className="flex items-center bg-gray-100 h-12 w-full border border-gray-300 rounded-xl px-4 text-md">
-          <FaSearch
-            className="text-gray-400"
-            size={16}
-          />
-          <input
-            className="w-full outline-none text-gray-700 text-md placeholder-gray-400 ml-2"
-            type="text"
-            placeholder="Buscar transação por título..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-
+    <>
+      <div className="flex items-center gap-3 mb-4 mt-6">
+        <Funnel className="bg-blue-100 h-8 w-8 rounded-xl text-blue-500 p-1 ml-4" />
+        <h1 className="font-bold text-2xl text-black">Nova Transação</h1>
         <button
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 h-11 px-4 rounded-lg font-semibold text-white transition-colors cursor-pointer"
-          onClick={() => setIsFilterOpen(!isFilterOpen)}
+          className="absolute right-4 top-6 bg-black h-8 w-8 rounded-xl flex items-center justify-center text-white"
+          type="button"
+          onClick={() => setIsMobileTransactionListOpen(false)}
         >
-          <Funnel size={14} />
-          Filtros
+          <X className="h-4 w-4" />
         </button>
       </div>
 
-      {/* - Inputs - */}
+      <div className="flex flex-col sm:mt-8 mb-4 bg-white sm:rounded-xl mx-auto w-full max-w-5xl">
+        {/* - Searchbar - */}
 
-      {isFilterOpen && (
+        <div className="flex items-center gap-3 h-20 px-4">
+          <div className="flex items-center bg-gray-100 h-12 w-full border border-gray-300 rounded-xl px-4">
+            <FaSearch
+              className="text-gray-400"
+              size={16}
+            />
+            <input
+              className="w-full outline-none text-gray-700 placeholder-gray-400 ml-2 bg-transparent"
+              type="text"
+              placeholder="Buscar transação por título..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+
+          {/* - Botão de abrir os filtros (só existe no desktop) - */}
+
+          <button
+            className="hidden sm:flex items-center gap-2 bg-blue-600 hover:bg-blue-500 h-11 px-4 rounded-lg font-semibold text-white transition-colors"
+            onClick={() => setIsFilterOpen((prev) => !prev)}
+          >
+            <Funnel size={14} />
+            Filtros
+          </button>
+        </div>
+
+        {/* - Inputs - */}
+
         <div
-          className="grid grid-cols-3 mt-6 relative"
           ref={filterRef}
+          className={`grid grid-cols-1 sm:grid-cols-3 gap-4 px-4 ${
+            isFilterOpen ? "block" : "block sm:hidden"
+          }`}
         >
           {/* - Período - */}
 
-          <div className="mx-3 w-60 relative">
-            <label className="text-gray-700 font-semibold mb-2 block">
+          <div className="relative">
+            <label className="font-semibold text-gray-700 mb-1 block">
               Período
             </label>
-
             <input
-              className="w-full bg-gray-100 h-12 border border-gray-300 rounded-xl px-4 cursor-pointer text-md text-gray-700 outline-none"
-              type="text"
-              placeholder="Todos os períodos"
-              value={selectedPeriod}
               readOnly
-              onClick={() => {
-                setIsPeriodOpen((prev) => !prev);
-                setIsTypeOpen(false);
-                setIsCategoryOpen(false);
-              }}
+              value={selectedPeriod}
+              placeholder="Todos os períodos"
+              className="w-full h-12 bg-gray-100 border border-gray-300 rounded-xl px-4 cursor-pointer"
+              onClick={() => setOpen(open === "period" ? null : "period")}
             />
 
-            {isPeriodOpen && (
-              <ul className="absolute z-1 mt-2 w-60 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+            {open === "period" && (
+              <ul className="absolute z-1 mt-2 w-full bg-white border rounded-xl shadow max-h-60 overflow-y-auto">
                 {PeriodOptions.map((option) => (
                   <li
-                    className="px-4 py-2 text-md text-gray-700 cursor-pointer hover:bg-blue-200 hover:text-blue-600 transition-colors"
                     key={option}
+                    className="px-4 py-2 cursor-pointer hover:bg-blue-200"
                     onClick={() => {
                       setSelectedPeriod(option);
                       setPeriod(option);
-                      setIsPeriodOpen(false);
+                      setOpen(null);
                     }}
                   >
                     {option}
@@ -148,36 +149,30 @@ const MobileFilter: React.FC<FilterProps> = ({
 
           {/* - Tipo - */}
 
-          <div className="mx-3 w-60 relative">
-            <label className="text-gray-700 font-semibold mb-2 block">
+          <div className="relative">
+            <label className="font-semibold text-gray-700 mb-1 block">
               Tipo
             </label>
-
             <input
-              className="w-full bg-gray-100 h-12 border border-gray-300 rounded-xl px-4 cursor-pointer text-md text-gray-700 outline-none"
-              type="text"
-              placeholder="Todos os tipos"
-              value={selectedType}
               readOnly
-              onClick={() => {
-                setIsTypeOpen((prev) => !prev);
-                setIsPeriodOpen(false);
-                setIsCategoryOpen(false);
-              }}
+              value={selectedType}
+              placeholder="Todos os tipos"
+              className="w-full h-12 bg-gray-100 border border-gray-300 rounded-xl px-4 cursor-pointer"
+              onClick={() => setOpen(open === "type" ? null : "type")}
             />
 
-            {isTypeOpen && (
-              <ul className="absolute z-50 mt-2 w-60 bg-white border border-gray-200 rounded-xl shadow-lg">
+            {open === "type" && (
+              <ul className="absolute z-1 mt-2 w-full bg-white border rounded-xl shadow">
                 {TransactionTypeOptions.map((option) => (
                   <li
-                    className="px-4 py-2 text-md text-gray-700 cursor-pointer hover:bg-blue-200 hover:text-blue-600 transition-colors"
                     key={option}
+                    className="px-4 py-2 cursor-pointer hover:bg-blue-200"
                     onClick={() => {
                       setSelectedType(option);
                       setType(option);
-                      setIsTypeOpen(false);
-                      setCategory("");
                       setSelectedCategory("");
+                      setCategory("");
+                      setOpen(null);
                     }}
                   >
                     {option}
@@ -189,39 +184,33 @@ const MobileFilter: React.FC<FilterProps> = ({
 
           {/* - Categoria - */}
 
-          <div className="mx-3 w-60 relative">
-            <label className="text-gray-700 font-semibold mb-2 block">
+          <div className="relative">
+            <label className="font-semibold text-gray-700 mb-1 block">
               Categoria
             </label>
-
             <input
-              className="w-full bg-gray-100 h-12 border border-gray-300 rounded-xl px-4 cursor-pointer text-md text-gray-700 outline-none"
-              type="text"
-              placeholder="Todas as categorias"
-              value={selectedCategory}
               readOnly
-              onClick={() => {
-                setIsCategoryOpen((prev) => !prev);
-                setIsPeriodOpen(false);
-                setIsTypeOpen(false);
-              }}
+              value={selectedCategory}
+              placeholder="Todas as categorias"
+              className="w-full h-12 bg-gray-100 border border-gray-300 rounded-xl px-4 cursor-pointer"
+              onClick={() => setOpen(open === "category" ? null : "category")}
             />
 
-            {isCategoryOpen && (
-              <ul className="absolute z-50 mt-2 w-60 bg-white border border-gray-200 rounded-xl shadow-lg max-h-72 overflow-y-auto">
+            {open === "category" && (
+              <ul className="absolute z-1 mt-2 w-full bg-white border rounded-xl shadow max-h-72 overflow-y-auto">
                 {type !== "Saída" && (
                   <>
-                    <span className="block px-4 py-2 text-md font-semibold tracking-wide text-white bg-black">
+                    <li className="px-4 py-2 font-semibold bg-black text-white">
                       Entrada
-                    </span>
+                    </li>
                     {IncomeOptions.map((option) => (
                       <li
                         key={option}
-                        className="px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-blue-200 hover:text-blue-600 transition-colors"
+                        className="px-4 py-2 cursor-pointer hover:bg-blue-200"
                         onClick={() => {
                           setSelectedCategory(option);
                           setCategory(option);
-                          setIsCategoryOpen(false);
+                          setOpen(null);
                         }}
                       >
                         {option}
@@ -232,17 +221,17 @@ const MobileFilter: React.FC<FilterProps> = ({
 
                 {type !== "Entrada" && (
                   <>
-                    <span className="block px-4 py-2 text-md font-semibold tracking-wide text-white bg-black">
+                    <li className="px-4 py-2 font-semibold bg-black text-white">
                       Saída
-                    </span>
+                    </li>
                     {ExpenseOptions.map((option) => (
                       <li
                         key={option}
-                        className="px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-blue-200 hover:text-blue-600 transition-colors"
+                        className="px-4 py-2 cursor-pointer hover:bg-blue-200"
                         onClick={() => {
                           setSelectedCategory(option);
                           setCategory(option);
-                          setIsCategoryOpen(false);
+                          setOpen(null);
                         }}
                       >
                         {option}
@@ -254,29 +243,30 @@ const MobileFilter: React.FC<FilterProps> = ({
             )}
           </div>
         </div>
-      )}
 
-      {/* - Footer - */}
+        {/* - Footer - */}
 
-      <div className="flex justify-between items-center my-4 pb-6">
-        <div
-          onClick={handleClearFilters}
-          className="flex items-center font-semibold text-gray-600 hover:text-black cursor-pointer transition-colors"
-        >
-          <X className="mr-2" />
-          Limpar Filtros
+        <div className="flex my-4 border-b w-screen border-gray-500/50">
+          <button
+            onClick={clearFilters}
+            className="flex items-center gap-2 font-semibold text-gray-600 hover:text-black"
+          >
+            <X />
+            Limpar filtros
+          </button>
+
+          <p className="font-semibold text-gray-700 flex flex-1 justify-center items-center w-screen">
+            <span className="text-blue-600 pr-2">
+              {filteredTransactions.length}
+            </span>
+            {filteredTransactions.length === 1
+              ? "Transação encontrada"
+              : "Transações encontradas"}
+          </p>
         </div>
-
-        <p className="font-semibold text-md text-gray-700">
-          <span className="text-blue-600 mr-2">
-            {filteredTransactions.length}
-          </span>
-          {filteredTransactions.length === 1
-            ? "Transação Encontrada"
-            : "Transações Encontradas"}
-        </p>
       </div>
-    </div>
+    </>
   );
 };
+
 export { MobileFilter };
