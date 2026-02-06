@@ -87,11 +87,11 @@ const Pagination: React.FC<PaginationProps> = ({
           {/* - Dropdown - */}
 
           <div
-            className="relative w-10 h-8 sm:w-14 sm:h-12"
+            className="relative w-10 h-8 sm:w-12 sm:h-10"
             ref={PageLimitDropdownRef}
           >
             <div
-              className={`absolute left-0 top-0 flex items-center overflow-hidden border border-gray-500/50 rounded-lg bg-gray-100 cursor-pointer transition-all duration-300 ease-in-out text-gray-700 ${isPageLimitDropdownOpen ? " w-40 sm:w-56 shadow-lg z-1" : " w-10 sm:w-14 shadow-sm z-1"}`}
+              className={`absolute left-0 top-0 flex items-center overflow-x-hidden border border-gray-500/50 rounded-lg bg-gray-100 cursor-pointer transition-all duration-300 ease-in-out text-gray-700 ${isPageLimitDropdownOpen ? " w-fit shadow-lg z-1" : " w-fit shadow-sm z-1"}`}
               onClick={() => setIsPageLimitDropdownOpen((prev) => !prev)}
             >
               {PageLimitOptions.filter(
